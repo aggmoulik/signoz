@@ -1,0 +1,20 @@
+name: Cypress e2e tests
+on: [push]
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # Install NPM dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: run cypress e2e tests
+        uses: cypress-io/github-action@v2.9.7
+        with:
+          start: yarn dev
+          wait-on: http://localhost:8080/
+          config-file: cypress.json
+          working-directory: frontend
+          headless: true
+          browser: chrome
+        env:
+          CYPRESS_baseUrl: http://localhost:8080/
